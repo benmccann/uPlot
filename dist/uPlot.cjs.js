@@ -693,6 +693,8 @@ function uPlot(opts, data) {
 	}
 
 	function drawLine(xdata, ydata, scaleX, scaleY, color, width, dash, fill) {
+		width = (width || 1) * pxRatio;
+
 		setCtxStyle(color, width, dash, fill);
 
 		var gap = false;
@@ -710,9 +712,7 @@ function uPlot(opts, data) {
 				ctx.moveTo(x, prevY);
 			}
 			else {
-				// maybe should be (x - prevX >= width), but doesnt seem to make much perf difference.
-				// visual difference is slight at width = 2
-				if (x != prevX) {
+				if (x - prevX >= width) {
 					if (gap) {
 						ctx.moveTo(x, y);
 						gap = false;
